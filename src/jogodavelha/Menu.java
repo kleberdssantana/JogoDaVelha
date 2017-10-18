@@ -65,6 +65,7 @@ public class Menu extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Jogo da velha");
 
         jButton1.setText("New game");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -105,7 +106,9 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Tela1 t1 = new Tela1();
+        NewGame newGame = new NewGame();
+        newGame.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
