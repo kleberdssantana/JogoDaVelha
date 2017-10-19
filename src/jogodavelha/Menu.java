@@ -5,6 +5,15 @@
  */
 package jogodavelha;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import static java.lang.Integer.parseInt;
+import java.net.Socket;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Kleber Santana
@@ -16,6 +25,65 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+    }
+
+    private void connect() {
+        String ip = "127.0.0.1";//(String) JOptionPane.showInputDialog("Informe seu IP");
+        int porta = 5000;//parseInt(JOptionPane.showInputDialog("Informe a porta"));
+        
+        String texto;
+        String textoModificado;
+        
+        //Objeto p/ leitura do teclado
+        Scanner inFromUser = new Scanner(System.in);
+
+        //Socket de conexao com o servidor
+        Socket clientSocket = null;
+        try {
+            clientSocket = new Socket(ip, porta);
+            JOptionPane.showMessageDialog(null, "Conexão estabelecida!");
+            //return true;
+        } catch (IOException ex) {
+            System.out.println(ex);
+            //return false;
+        }
+        
+        //Objeto de envio de mensagens p/ o servidor
+        PrintWriter outToServer = null;
+        try {
+            outToServer = new PrintWriter(clientSocket.getOutputStream(), true);
+        } catch (IOException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Objeto de recebimento de mensagens do servidor	   
+        Scanner inFromServer = null;
+        try {
+            inFromServer = new Scanner(clientSocket.getInputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Leitura do teclado
+        texto = inFromUser.nextLine();
+
+        //enviando mensagem p/ o servidor
+        outToServer.println(texto);
+
+        //recebendo resposta do servidor
+        textoModificado = inFromServer.nextLine();
+
+        //Exibindo resposta na tela do usu�rio-cliente
+        System.out.println("Eco do servidor: " + textoModificado);
+        System.out.println("*** Fim - cliente ***");
+
+        try {
+            //Fechando o socket de conex�o com servidor
+            clientSocket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
@@ -75,6 +143,11 @@ public class Menu extends javax.swing.JFrame {
         });
 
         jButton2.setText("Multiplayer");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Enter room");
 
@@ -110,6 +183,13 @@ public class Menu extends javax.swing.JFrame {
         newGame.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //boolean ok = connect();
+        connect();
+//        if(ok)
+//            new NewGame().setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

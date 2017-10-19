@@ -5,7 +5,6 @@
  */
 package jogodavelha;
 
-import java.awt.Component;
 import javax.swing.JOptionPane;
 
 /**
@@ -112,7 +111,7 @@ public class NewGame extends javax.swing.JFrame {
             activePlayer2 = false;
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -272,6 +271,11 @@ public class NewGame extends javax.swing.JFrame {
         jButton1.setText("Vs Computador");
 
         jButton2.setText("Vs Player");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -467,6 +471,10 @@ public class NewGame extends javax.swing.JFrame {
         newGame.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_newGameActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
