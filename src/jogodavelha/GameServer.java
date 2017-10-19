@@ -1,39 +1,65 @@
 package jogodavelha;
 
-import java.io.*;
-import java.net.*;
+import java.util.List;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GameServer {
 
-    public static void main(String args[]) throws Exception {
-        String textoDoCliente;
-        String textoModificado;
+    List<PrintWriter> escritores = new ArrayList<>();
 
-        //Socket de escuta
-        ServerSocket welcomeSocket = new ServerSocket(5000); //escutando...
-
-        while (true) {
-            //Socket de conexao com o cliente
-            Socket connectionSocket = welcomeSocket.accept();
-            System.out.println("Cliente conectou..." + connectionSocket.getInetAddress());
-
-            //Objeto de recebimento de mensagens do cliente
-            Scanner inFromClient = new Scanner(connectionSocket.getInputStream());
-
-            //Objeto de envio de mensagens p/ o cliente
-            PrintWriter outToClient = new PrintWriter(connectionSocket.getOutputStream(), true);
-
-            //recebendo msg do cliente
-            textoDoCliente = inFromClient.nextLine();
-            System.out.println("Cliente enviou: " + textoDoCliente);
-
-            //Modificando os caract�res para mai�sculo
-            textoModificado = textoDoCliente.toUpperCase();
-
-            //respondendo msg p/ o cliente
-            outToClient.println(textoModificado);
-
+    public GameServer() {
+        try {
+            ServerSocket server = new ServerSocket(5000);
+            while (true) {
+                Socket socket = server.accept();
+                new Thread(new EscutaCliente(socket)).start();
+                PrintWriter p = new PrintWriter(socket.getOutputStream());
+                escritores.add(p);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
+
+    private void encaminhaParaTodos(String texto) {
+        for (PrintWriter w : escritores) {
+            try {
+                w.println(texto);
+                w.flush();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    private class EscutaCliente implements Runnable {
+
+        Scanner leitor;
+
+        public EscutaCliente(Socket socket) {
+            try {
+                leitor = new Scanner(socket.getInputStream());
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+
+        @Override
+        public void run() {
+            String texto;
+            while ((texto = leitor.nextLine()) != null) {
+                System.out.println(texto);
+                encaminhaParaTodos(texto);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        new GameServer();
+    }
+
 }

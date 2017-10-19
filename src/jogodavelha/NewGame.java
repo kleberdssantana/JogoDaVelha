@@ -28,16 +28,7 @@ public class NewGame extends javax.swing.JFrame {
 
     private int flagHidePanel = 0;
     
-    static String texto;
-    static String textoModificado;
-    //Objeto p/ leitura do teclado
-    static Scanner inFromUser = new Scanner(System.in);
-    //Socket de conex�o com o servidor
-    static Socket clientSocket = null;
-    //Objeto de envio de mensagens p/ o servidor
-    static PrintWriter outToServer = null;
-    //Objeto de recebimento de mensagens do servidor	   
-    static Scanner inFromServer = null;
+    GameClient gameClient = new GameClient();
 
     public NewGame(int flagHidePanel) {
         this.flagHidePanel = flagHidePanel;
@@ -494,41 +485,49 @@ public class NewGame extends javax.swing.JFrame {
     private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
         buttonPressed(b2);
         activePlayer();
+        test(b2);
     }//GEN-LAST:event_b2ActionPerformed
 
     private void b3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b3ActionPerformed
         buttonPressed(b3);
         activePlayer();
+        test(b3);
     }//GEN-LAST:event_b3ActionPerformed
 
     private void b4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b4ActionPerformed
         buttonPressed(b4);
         activePlayer();
+        test(b4);
     }//GEN-LAST:event_b4ActionPerformed
 
     private void b5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b5ActionPerformed
         buttonPressed(b5);
         activePlayer();
+        test(b5);
     }//GEN-LAST:event_b5ActionPerformed
 
     private void b6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b6ActionPerformed
         buttonPressed(b6);
         activePlayer();
+        test(b6);
     }//GEN-LAST:event_b6ActionPerformed
 
     private void b7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b7ActionPerformed
         buttonPressed(b7);
         activePlayer();
+        test(b7);
     }//GEN-LAST:event_b7ActionPerformed
 
     private void b8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b8ActionPerformed
         buttonPressed(b8);
         activePlayer();
+        test(b8);
     }//GEN-LAST:event_b8ActionPerformed
 
     private void b9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b9ActionPerformed
         buttonPressed(b9);
         activePlayer();
+        test(b9);
     }//GEN-LAST:event_b9ActionPerformed
 
     private void newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameActionPerformed
@@ -547,33 +546,11 @@ public class NewGame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
     
     private void connect(){
-        try {
-            clientSocket = new Socket("localhost", 5000);
-            outToServer = new PrintWriter(clientSocket.getOutputStream(), true);
-            inFromServer = new Scanner(clientSocket.getInputStream());
-        } catch (IOException ex) {
-            System.out.println(ex);
-        }
-        
+        gameClient.configuraRede();
     }
     
     public void test(JButton button){
-        if(button.getText() != null || button.getText().isEmpty()){
-            //Leitura do teclado
-            texto = button.getText();
-
-            //enviando mensagem p/ o servidor
-            outToServer.println(texto);
-
-            //recebendo resposta do servidor
-            textoModificado = inFromServer.nextLine();
-
-            //Exibindo resposta na tela do usuario-cliente
-            b3.setText(textoModificado);
-            System.out.println("Eco do servidor: " + textoModificado);
-            
-        }
-        
+        gameClient.setTextoParaEnviar(button.getText());
     }
     
     /**
