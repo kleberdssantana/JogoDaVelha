@@ -151,7 +151,7 @@ public class NewGame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TIC TAC TOE");
-        setBackground(new java.awt.Color(102, 255, 255));
+        setBackground(new java.awt.Color(51, 51, 51));
         setForeground(java.awt.Color.white);
         setPreferredSize(new java.awt.Dimension(623, 488));
 
@@ -474,6 +474,7 @@ public class NewGame extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
