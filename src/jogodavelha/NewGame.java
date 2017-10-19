@@ -85,10 +85,10 @@ public class NewGame extends javax.swing.JFrame {
             draws++;
         }
         JOptionPane.showMessageDialog(null, "Parabéns "+ w +" você ganhou a partida!");
-        newGame();
+        clearFields();
     }
     
-    public void newGame(){
+    public void clearFields(){
         b1.setText("");
         b2.setText("");
         b3.setText("");
@@ -98,8 +98,8 @@ public class NewGame extends javax.swing.JFrame {
         b7.setText("");
         b8.setText("");
         b9.setText("");
-        System.out.println(activePlayer1);
-        System.out.println(activePlayer2);
+        activePlayer1 = true;
+        activePlayer2 = false;
     }
     
     public void activePlayer(){
@@ -107,8 +107,8 @@ public class NewGame extends javax.swing.JFrame {
             activePlayer1 = false;
             activePlayer2 = true;
         }else{
-            activePlayer2 = false;
             activePlayer1 = true;
+            activePlayer2 = false;
         }
     }
 
@@ -462,7 +462,7 @@ public class NewGame extends javax.swing.JFrame {
     }//GEN-LAST:event_b9ActionPerformed
 
     private void newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameActionPerformed
-        newGame();
+        clearFields();
     }//GEN-LAST:event_newGameActionPerformed
 
     /**
