@@ -6,6 +6,11 @@
 package jogodavelha;
 
 import java.awt.Component;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.Scanner;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,88 +21,110 @@ public class NewGame extends javax.swing.JFrame {
 
     boolean activePlayer1 = true;
     boolean activePlayer2 = false;
-    
+
     int victoriesPlayer1 = 0;
     int victoriesPlayer2 = 0;
     int draws = 0;
+
+    private int flagHidePanel = 0;
     
-    
-    public NewGame() {
+    static String texto;
+    static String textoModificado;
+    //Objeto p/ leitura do teclado
+    static Scanner inFromUser = new Scanner(System.in);
+    //Socket de conex�o com o servidor
+    static Socket clientSocket = null;
+    //Objeto de envio de mensagens p/ o servidor
+    static PrintWriter outToServer = null;
+    //Objeto de recebimento de mensagens do servidor	   
+    static Scanner inFromServer = null;
+
+    public NewGame(int flagHidePanel) {
+        this.flagHidePanel = flagHidePanel;
         initComponents();
+        jButton3.setVisible(false);
+        jButton4.setVisible(false);
+        if (flagHidePanel == 1) {
+            leaveGame.setVisible(false);
+            jButton1.setVisible(false);
+            jButton2.setVisible(false);
+            jButton3.setVisible(true);
+            jButton4.setVisible(true);
+        }
     }
-    
-    public void buttonPressed(javax.swing.JButton button){
-        if(activePlayer1 == true && button.getText().equals("")){
+
+    public void buttonPressed(javax.swing.JButton button) {
+        if (activePlayer1 == true && button.getText().equals("")) {
             button.setText("X");
-        }else{
+        } else {
             button.setText("O");
         }
-        
+
         winPossibilities("X");
         winPossibilities("O");
     }
-    
-    public void winPossibilities(String player){
-        if(b1.getText().equals(player) && b2.getText().equals(player) && 
-                b3.getText().equals(player)){
+
+    public void winPossibilities(String player) {
+        if (b1.getText().equals(player) && b2.getText().equals(player)
+                && b3.getText().equals(player)) {
             winner(player);
         }
-        if(b1.getText().equals(player) && b5.getText().equals(player) && 
-                b9.getText().equals(player)){
+        if (b1.getText().equals(player) && b5.getText().equals(player)
+                && b9.getText().equals(player)) {
             winner(player);
         }
-        if(b4.getText().equals(player) && b5.getText().equals(player) && 
-                b6.getText().equals(player)){
+        if (b4.getText().equals(player) && b5.getText().equals(player)
+                && b6.getText().equals(player)) {
             winner(player);
         }
-        if(b7.getText().equals(player) && b8.getText().equals(player) && 
-                b9.getText().equals(player)){
+        if (b7.getText().equals(player) && b8.getText().equals(player)
+                && b9.getText().equals(player)) {
             winner(player);
         }
-        if(b3.getText().equals(player) && b5.getText().equals(player) && 
-                b7.getText().equals(player)){
+        if (b3.getText().equals(player) && b5.getText().equals(player)
+                && b7.getText().equals(player)) {
             winner(player);
         }
-        if(b1.getText().equals(player) && b4.getText().equals(player) && 
-                b7.getText().equals(player)){
+        if (b1.getText().equals(player) && b4.getText().equals(player)
+                && b7.getText().equals(player)) {
             winner(player);
         }
-        if(b2.getText().equals(player) && b5.getText().equals(player) && 
-                b8.getText().equals(player)){
+        if (b2.getText().equals(player) && b5.getText().equals(player)
+                && b8.getText().equals(player)) {
             winner(player);
         }
-        if(b3.getText().equals(player) && b6.getText().equals(player) && 
-                b9.getText().equals(player)){
+        if (b3.getText().equals(player) && b6.getText().equals(player)
+                && b9.getText().equals(player)) {
             winner(player);
         }
-        
-        if(!b1.getText().equals("") && !b2.getText().equals("") && 
-           !b3.getText().equals("") && !b4.getText().equals("") &&
-           !b5.getText().equals("") && !b6.getText().equals("") &&
-           !b7.getText().equals("") && !b8.getText().equals("") && 
-           !b9.getText().equals("")){
+
+        if (!b1.getText().equals("") && !b2.getText().equals("")
+                && !b3.getText().equals("") && !b4.getText().equals("")
+                && !b5.getText().equals("") && !b6.getText().equals("")
+                && !b7.getText().equals("") && !b8.getText().equals("")
+                && !b9.getText().equals("")) {
             winner("Empate");
         }
     }
-    
-    public void winner(String player){
-        if(player.equals("X")){
+
+    public void winner(String player) {
+        if (player.equals("X")) {
             victoriesPlayer1++;
-            winsPlayer1.setText(""+victoriesPlayer1);
+            winsPlayer1.setText("" + victoriesPlayer1);
             JOptionPane.showMessageDialog(null, "Parabéns Jogador 1 você ganhou a partida!");
-        }else if(player.equals("O")){
+        } else if (player.equals("O")) {
             victoriesPlayer2++;
-            winsPlayer2.setText(""+victoriesPlayer2);
+            winsPlayer2.setText("" + victoriesPlayer2);
             JOptionPane.showMessageDialog(null, "Parabéns Jogador 2 você ganhou a partida!");
-        }else{
+        } else {
             draws++;
-            drawsNumber.setText(""+ draws);
+            drawsNumber.setText("" + draws);
             JOptionPane.showMessageDialog(null, "Jogo empatado, reinicie a partida!!");
         }
         clearFields();
     }
-    
-    public void clearFields(){
+
+    public void clearFields() {
         b1.setText("");
         b2.setText("");
         b3.setText("");
@@ -110,12 +137,12 @@ public class NewGame extends javax.swing.JFrame {
         activePlayer1 = false;
         activePlayer2 = true;
     }
-    
-    public void activePlayer(){
-        if(activePlayer1 == true){
+
+    public void activePlayer() {
+        if (activePlayer1 == true) {
             activePlayer1 = false;
             activePlayer2 = true;
-        }else{
+        } else {
             activePlayer1 = true;
             activePlayer2 = false;
         }
@@ -143,6 +170,8 @@ public class NewGame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -282,6 +311,20 @@ public class NewGame extends javax.swing.JFrame {
 
         jButton2.setText("Vs Player");
 
+        jButton3.setText("Abrir Chat");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Entrar na sala");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -291,15 +334,23 @@ public class NewGame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton4))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -437,6 +488,7 @@ public class NewGame extends javax.swing.JFrame {
     private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
         buttonPressed(b1);
         activePlayer();
+        test(b1);
     }//GEN-LAST:event_b1ActionPerformed
 
     private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
@@ -480,11 +532,50 @@ public class NewGame extends javax.swing.JFrame {
     }//GEN-LAST:event_b9ActionPerformed
 
     private void newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameActionPerformed
-        NewGame newGame = new NewGame();
+        NewGame newGame = new NewGame(0);
         newGame.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_newGameActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String nome = JOptionPane.showInputDialog("Informe seu Nick");
+        new ChatCliente(nome);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        connect();
+    }//GEN-LAST:event_jButton4ActionPerformed
+    
+    private void connect(){
+        try {
+            clientSocket = new Socket("localhost", 5000);
+            outToServer = new PrintWriter(clientSocket.getOutputStream(), true);
+            inFromServer = new Scanner(clientSocket.getInputStream());
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+        
+    }
+    
+    public void test(JButton button){
+        if(button.getText() != null || button.getText().isEmpty()){
+            //Leitura do teclado
+            texto = button.getText();
+
+            //enviando mensagem p/ o servidor
+            outToServer.println(texto);
+
+            //recebendo resposta do servidor
+            textoModificado = inFromServer.nextLine();
+
+            //Exibindo resposta na tela do usuario-cliente
+            b3.setText(textoModificado);
+            System.out.println("Eco do servidor: " + textoModificado);
+            
+        }
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -515,7 +606,7 @@ public class NewGame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewGame().setVisible(true);
+                new NewGame(0).setVisible(true);
             }
         });
     }
@@ -534,6 +625,8 @@ public class NewGame extends javax.swing.JFrame {
     private javax.swing.JLabel drawsNumber;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
