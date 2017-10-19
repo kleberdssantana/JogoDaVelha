@@ -10,7 +10,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -302,7 +302,6 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="NumbersOfDraws" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="numberOfVictoriesPlayer1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -312,6 +311,11 @@
                                   <Component id="numberOfVictoriesPlayer2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="winsPlayer2" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="NumbersOfDraws" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="drawsNumber" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="0" pref="172" max="32767" attributes="0"/>
@@ -349,7 +353,10 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="NumbersOfDraws" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="NumbersOfDraws" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="drawsNumber" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -392,7 +399,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="NumbersOfDraws">
           <Properties>
-            <Property name="text" type="java.lang.String" value="N&#xfa;mero de empates 0"/>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero de empates"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="winsPlayer1">
@@ -401,6 +408,11 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="winsPlayer2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="drawsNumber">
           <Properties>
             <Property name="text" type="java.lang.String" value="0"/>
           </Properties>
