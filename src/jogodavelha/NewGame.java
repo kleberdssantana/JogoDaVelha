@@ -21,6 +21,7 @@ public class NewGame extends javax.swing.JFrame {
     int victoriesPlayer2 = 0;
     int draws = 0;
     
+    
     public NewGame() {
         initComponents();
     }
@@ -69,26 +70,33 @@ public class NewGame extends javax.swing.JFrame {
                 b9.getText().equals(player)){
             winner(player);
         }
+        
+        if(!b1.getText().equals("") && !b2.getText().equals("") && 
+           !b3.getText().equals("") && !b4.getText().equals("") &&
+           !b5.getText().equals("") && !b6.getText().equals("") &&
+           !b7.getText().equals("") && !b8.getText().equals("") && 
+           !b9.getText().equals("")){
+            winner("Empate");
+        }
     }
-    
     public void winner(String player){
-        String w = "";
         if(player.equals("X")){
-            w = "Jogador 1";
             victoriesPlayer1++;
             winsPlayer1.setText(""+victoriesPlayer1);
+            JOptionPane.showMessageDialog(null, "Parabéns Jogador 1 você ganhou a partida!");
         }else if(player.equals("O")){
-            w = "Jogador 2";
             victoriesPlayer2++;
             winsPlayer2.setText(""+victoriesPlayer2);
+            JOptionPane.showMessageDialog(null, "Parabéns Jogador 2 você ganhou a partida!");
         }else{
             draws++;
+            drawsNumber.setText(""+ draws);
+            JOptionPane.showMessageDialog(null, "Jogo empatado, reinicie a partida!!");
         }
-        JOptionPane.showMessageDialog(null, "Parabéns "+ w +" você ganhou a partida!");
-        newGame();
+        clearFields();
     }
     
-    public void newGame(){
+    public void clearFields(){
         b1.setText("");
         b2.setText("");
         b3.setText("");
@@ -98,8 +106,8 @@ public class NewGame extends javax.swing.JFrame {
         b7.setText("");
         b8.setText("");
         b9.setText("");
-        System.out.println(activePlayer1);
-        System.out.println(activePlayer2);
+        activePlayer1 = false;
+        activePlayer2 = true;
     }
     
     public void activePlayer(){
@@ -107,8 +115,8 @@ public class NewGame extends javax.swing.JFrame {
             activePlayer1 = false;
             activePlayer2 = true;
         }else{
-            activePlayer2 = false;
             activePlayer1 = true;
+            activePlayer2 = false;
         }
     }
 
@@ -146,6 +154,7 @@ public class NewGame extends javax.swing.JFrame {
         NumbersOfDraws = new javax.swing.JLabel();
         winsPlayer1 = new javax.swing.JLabel();
         winsPlayer2 = new javax.swing.JLabel();
+        drawsNumber = new javax.swing.JLabel();
         newGame = new javax.swing.JButton();
         leaveGame = new javax.swing.JButton();
 
@@ -270,20 +279,20 @@ public class NewGame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(b2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(b3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(b3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(b4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(b5, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(b6, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(b6, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(b7, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(b8, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(b9, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(b9, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(b7, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -352,13 +361,16 @@ public class NewGame extends javax.swing.JFrame {
         numberOfVictoriesPlayer2.setText("Victories: ");
 
         NumbersOfDraws.setForeground(new java.awt.Color(255, 255, 255));
-        NumbersOfDraws.setText("Draws:  0");
+        NumbersOfDraws.setText("Draws:");
 
         winsPlayer1.setForeground(new java.awt.Color(153, 255, 51));
         winsPlayer1.setText("0");
 
         winsPlayer2.setForeground(new java.awt.Color(153, 255, 51));
         winsPlayer2.setText("0");
+
+        drawsNumber.setForeground(new java.awt.Color(153, 255, 51));
+        drawsNumber.setText("0");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -371,7 +383,10 @@ public class NewGame extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(NumbersOfDraws)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(NumbersOfDraws)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(drawsNumber))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
@@ -419,7 +434,9 @@ public class NewGame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(NumbersOfDraws)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NumbersOfDraws)
+                    .addComponent(drawsNumber))
                 .addContainerGap())
         );
 
@@ -523,7 +540,7 @@ public class NewGame extends javax.swing.JFrame {
     }//GEN-LAST:event_b9ActionPerformed
 
     private void newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameActionPerformed
-        newGame();
+        clearFields();
     }//GEN-LAST:event_newGameActionPerformed
 
     private void leaveGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveGameActionPerformed
@@ -580,6 +597,7 @@ public class NewGame extends javax.swing.JFrame {
     private javax.swing.JButton b7;
     private javax.swing.JButton b8;
     private javax.swing.JButton b9;
+    private javax.swing.JLabel drawsNumber;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
