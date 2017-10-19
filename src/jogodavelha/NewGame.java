@@ -21,6 +21,7 @@ public class NewGame extends javax.swing.JFrame {
     int victoriesPlayer2 = 0;
     int draws = 0;
     
+    
     public NewGame() {
         initComponents();
     }
@@ -69,22 +70,30 @@ public class NewGame extends javax.swing.JFrame {
                 b9.getText().equals(player)){
             winner(player);
         }
+        
+        if(!b1.getText().equals("") && !b2.getText().equals("") && 
+           !b3.getText().equals("") && !b4.getText().equals("") &&
+           !b5.getText().equals("") && !b6.getText().equals("") &&
+           !b7.getText().equals("") && !b8.getText().equals("") && 
+           !b9.getText().equals("")){
+            winner("Empate");
+        }
     }
     
     public void winner(String player){
-        String w = "";
         if(player.equals("X")){
-            w = "Jogador 1";
             victoriesPlayer1++;
             winsPlayer1.setText(""+victoriesPlayer1);
+            JOptionPane.showMessageDialog(null, "Parabéns Jogador 1 você ganhou a partida!");
         }else if(player.equals("O")){
-            w = "Jogador 2";
             victoriesPlayer2++;
             winsPlayer2.setText(""+victoriesPlayer2);
+            JOptionPane.showMessageDialog(null, "Parabéns Jogador 2 você ganhou a partida!");
         }else{
             draws++;
+            drawsNumber.setText(""+ draws);
+            JOptionPane.showMessageDialog(null, "Jogo empatado, reinicie a partida!!");
         }
-        JOptionPane.showMessageDialog(null, "Parabéns "+ w +" você ganhou a partida!");
         clearFields();
     }
     
@@ -98,8 +107,8 @@ public class NewGame extends javax.swing.JFrame {
         b7.setText("");
         b8.setText("");
         b9.setText("");
-        activePlayer1 = true;
-        activePlayer2 = false;
+        activePlayer1 = false;
+        activePlayer2 = true;
     }
     
     public void activePlayer(){
@@ -146,6 +155,7 @@ public class NewGame extends javax.swing.JFrame {
         NumbersOfDraws = new javax.swing.JLabel();
         winsPlayer1 = new javax.swing.JLabel();
         winsPlayer2 = new javax.swing.JLabel();
+        drawsNumber = new javax.swing.JLabel();
         newGame = new javax.swing.JButton();
         leaveGame = new javax.swing.JButton();
 
@@ -307,11 +317,13 @@ public class NewGame extends javax.swing.JFrame {
 
         numberOfVictoriesPlayer2.setText("Número de vitórias: ");
 
-        NumbersOfDraws.setText("Número de empates 0");
+        NumbersOfDraws.setText("Número de empates");
 
         winsPlayer1.setText("0");
 
         winsPlayer2.setText("0");
+
+        drawsNumber.setText("0");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -332,7 +344,6 @@ public class NewGame extends javax.swing.JFrame {
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel5))
-                            .addComponent(NumbersOfDraws)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(numberOfVictoriesPlayer1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -340,7 +351,11 @@ public class NewGame extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(numberOfVictoriesPlayer2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(winsPlayer2)))
+                                .addComponent(winsPlayer2))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(NumbersOfDraws)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(drawsNumber)))
                         .addGap(0, 172, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -368,7 +383,9 @@ public class NewGame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(NumbersOfDraws)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NumbersOfDraws)
+                    .addComponent(drawsNumber))
                 .addContainerGap())
         );
 
@@ -414,6 +431,7 @@ public class NewGame extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
@@ -462,7 +480,9 @@ public class NewGame extends javax.swing.JFrame {
     }//GEN-LAST:event_b9ActionPerformed
 
     private void newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameActionPerformed
-        clearFields();
+        NewGame newGame = new NewGame();
+        newGame.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_newGameActionPerformed
 
     /**
@@ -511,6 +531,7 @@ public class NewGame extends javax.swing.JFrame {
     private javax.swing.JButton b7;
     private javax.swing.JButton b8;
     private javax.swing.JButton b9;
+    private javax.swing.JLabel drawsNumber;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
