@@ -21,6 +21,7 @@ public class NewGame extends javax.swing.JFrame {
     int victoriesPlayer2 = 0;
     int draws = 0;
     
+    
     public NewGame() {
         initComponents();
     }
@@ -98,8 +99,8 @@ public class NewGame extends javax.swing.JFrame {
         b7.setText("");
         b8.setText("");
         b9.setText("");
-        activePlayer1 = true;
-        activePlayer2 = false;
+        activePlayer1 = false;
+        activePlayer2 = true;
     }
     
     public void activePlayer(){
@@ -462,7 +463,9 @@ public class NewGame extends javax.swing.JFrame {
     }//GEN-LAST:event_b9ActionPerformed
 
     private void newGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameActionPerformed
-        clearFields();
+        NewGame newGame = new NewGame();
+        newGame.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_newGameActionPerformed
 
     /**
